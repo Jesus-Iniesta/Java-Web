@@ -1,7 +1,9 @@
 package connection;
 
 
-import org.mariadb.jdbc.Connection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConnectionDB  {
 
@@ -9,23 +11,17 @@ public class ConnectionDB  {
     static String port = "3307";
     static String user = "root";
     static String password = "1234";
-    static String url = "jdbc:mysql://localhost:" + port + "/" + name;
+    static String url = "jdbc:mariadb://localhost:" + port + "/" + name;
 
     static Connection con = null;
-    /**
-     * Constructor for establishing a connection to the database.
-     */
-    public ConnectionDB() {
+
+    public static Connection getConnection() throws SQLException {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            con = (Connection) java.sql.DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
-            e.printStackTrace();
+            return DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Driver MariaDB no encontrado", e);
         }
-    }
-
-    public static Connection getConnection(){
-        return con;
     }
 
     public static void closeConnection(Connection con) {
