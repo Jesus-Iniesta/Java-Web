@@ -11,7 +11,7 @@ public class ConnectionDB  {
     static String password = "1234";
     static String url = "jdbc:mysql://localhost:" + port + "/" + name;
 
-    Connection con = null;
+    static Connection con = null;
     /**
      * Constructor for establishing a connection to the database.
      */
@@ -22,6 +22,10 @@ public class ConnectionDB  {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Connection getConnection(){
+        return con;
     }
 
     public static void closeConnection(Connection con) {
